@@ -720,14 +720,14 @@ class CrunchyrollBetaBaseIE(CrunchyrollBaseIE):
 
     def _get_params(self, lang):
         if not CrunchyrollBetaBaseIE.params:
-            if self._get_cookies(f'https://beta.crunchyroll.com/{lang}').get('etp_rt'):
+            if self._get_cookies(f'https://www.crunchyroll.com/{lang}').get('etp_rt'):
                 grant_type, key = 'etp_rt_cookie', 'accountAuthClientId'
             else:
                 grant_type, key = 'client_id', 'anonClientId'
 
             initial_state, app_config = self._get_beta_embedded_json(self._download_webpage(
-                f'https://beta.crunchyroll.com/{lang}', None, note='Retrieving main page'), None)
-            api_domain = app_config['cxApiParams']['apiDomain']
+                f'https://www.crunchyroll.com/{lang}', None, note='Retrieving main page'), None)
+            api_domain = app_config['cxApiParams']['apiDomain'].replace('beta.crunchyroll.com', 'www.crunchyroll.com')
 
             auth_response = self._download_json(
                 f'{api_domain}/auth/v1/token', None, note=f'Authenticating with grant_type={grant_type}',
@@ -739,7 +739,7 @@ class CrunchyrollBetaBaseIE(CrunchyrollBaseIE):
                 headers={
                     'Authorization': auth_response['token_type'] + ' ' + auth_response['access_token']
                 })
-            cms = traverse_obj(policy_response, 'cms_beta', 'cms')
+            cms = policy_response.get('cms_web')
             bucket = cms['bucket']
             params = {
                 'Policy': cms['policy'],
@@ -756,12 +756,12 @@ class CrunchyrollBetaBaseIE(CrunchyrollBaseIE):
 class CrunchyrollBetaIE(CrunchyrollBetaBaseIE):
     IE_NAME = 'crunchyroll:beta'
     _VALID_URL = r'''(?x)
-        https?://beta\.crunchyroll\.com/
+        https?://(?:beta|www)\.crunchyroll\.com/
         (?P<lang>(?:\w{2}(?:-\w{2})?/)?)
         watch/(?P<id>\w+)
         (?:/(?P<display_id>[\w-]+))?/?(?:[?#]|$)'''
     _TESTS = [{
-        'url': 'https://beta.crunchyroll.com/watch/GY2P1Q98Y/to-the-future',
+        'url': 'https://www.crunchyroll.com/watch/GY2P1Q98Y/to-the-future',
         'info_dict': {
             'id': 'GY2P1Q98Y',
             'ext': 'mp4',
@@ -777,11 +777,11 @@ class CrunchyrollBetaIE(CrunchyrollBetaBaseIE):
             'season_number': 1,
             'episode': 'To the Future',
             'episode_number': 73,
-            'thumbnail': r're:^https://beta.crunchyroll.com/imgsrv/.*\.jpeg$',
+            'thumbnail': r're:^https://www.crunchyroll.com/imgsrv/.*\.jpeg$',
         },
         'params': {'skip_download': 'm3u8', 'format': 'all[format_id~=hardsub]'},
     }, {
-        'url': 'https://beta.crunchyroll.com/watch/GYE5WKQGR',
+        'url': 'https://www.crunchyroll.com/watch/GYE5WKQGR',
         'info_dict': {
             'id': 'GYE5WKQGR',
             'ext': 'mp4',
@@ -797,12 +797,12 @@ class CrunchyrollBetaIE(CrunchyrollBetaBaseIE):
             'season_number': 1,
             'episode': 'Porter Robinson presents Shelter the Animation',
             'episode_number': 0,
-            'thumbnail': r're:^https://beta.crunchyroll.com/imgsrv/.*\.jpeg$',
+            'thumbnail': r're:^https://www.crunchyroll.com/imgsrv/.*\.jpeg$',
         },
         'params': {'skip_download': True},
         'skip': 'Video is Premium only',
     }, {
-        'url': 'https://beta.crunchyroll.com/watch/GY2P1Q98Y',
+        'url': 'https://www.crunchyroll.com/watch/GY2P1Q98Y',
         'only_matching': True,
     }, {
         'url': 'https://beta.crunchyroll.com/pt-br/watch/G8WUN8VKP/the-ruler-of-conspiracy',
@@ -904,12 +904,12 @@ class CrunchyrollBetaIE(CrunchyrollBetaBaseIE):
 class CrunchyrollBetaShowIE(CrunchyrollBetaBaseIE):
     IE_NAME = 'crunchyroll:playlist:beta'
     _VALID_URL = r'''(?x)
-        https?://beta\.crunchyroll\.com/
+        https?://(?:beta|www)\.crunchyroll\.com/
         (?P<lang>(?:\w{2}(?:-\w{2})?/)?)
         series/(?P<id>\w+)
         (?:/(?P<display_id>[\w-]+))?/?(?:[?#]|$)'''
     _TESTS = [{
-        'url': 'https://beta.crunchyroll.com/series/GY19NQ2QR/Girl-Friend-BETA',
+        'url': 'https://www.crunchyroll.com/series/GY19NQ2QR/Girl-Friend-BETA',
         'info_dict': {
             'id': 'GY19NQ2QR',
             'title': 'Girl Friend BETA',
