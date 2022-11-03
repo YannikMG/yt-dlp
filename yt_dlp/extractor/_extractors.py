@@ -148,6 +148,10 @@ from .awaan import (
     AWAANSeasonIE,
 )
 from .azmedien import AZMedienIE
+from .akibapasstv import (
+    AkibaPassTVIE,
+    AkibaPassTVSeasonIE,
+)
 from .baidu import BaiduVideoIE
 from .banbye import (
     BanByeIE,
