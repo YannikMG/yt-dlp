@@ -46,10 +46,13 @@
  - **aenetworks**: A+E Networks: A&E, Lifetime, History.com, FYI Network and History Vault
  - **aenetworks:collection**
  - **aenetworks:show**
+ - **AeonCo**
  - **afreecatv**: [<abbr title="netrc machine"><em>afreecatv</em></abbr>] afreecatv.com
  - **afreecatv:live**: [<abbr title="netrc machine"><em>afreecatv</em></abbr>] afreecatv.com
  - **afreecatv:user**
  - **AirMozilla**
+ - **AkibaPassTV**: [<abbr title="netrc machine"><em>akibapasstv</em></abbr>]
+ - **AkibaPassTVSeason**
  - **AliExpressLive**
  - **AlJazeera**
  - **Allocine**
@@ -119,7 +122,6 @@
  - **Bandcamp:album**
  - **Bandcamp:user**
  - **Bandcamp:weekly**
- - **bangumi.bilibili.com**: BiliBili番剧
  - **BannedVideo**
  - **bbc**: [<abbr title="netrc machine"><em>bbc</em></abbr>] BBC
  - **bbc.co.uk**: [<abbr title="netrc machine"><em>bbc</em></abbr>] BBC iPlayer
@@ -149,6 +151,8 @@
  - **Bilibili category extractor**
  - **BilibiliAudio**
  - **BilibiliAudioAlbum**
+ - **BiliBiliBangumi**
+ - **BiliBiliBangumiMedia**
  - **BiliBiliPlayer**
  - **BiliBiliSearch**: Bilibili video search; "bilisearch:" prefix
  - **BilibiliSpaceAudio**
@@ -218,7 +222,7 @@
  - **cbssports:embed**
  - **CCMA**
  - **CCTV**: 央视网
- - **CDA**
+ - **CDA**: [<abbr title="netrc machine"><em>cdapl</em></abbr>]
  - **Cellebrite**
  - **CeskaTelevize**
  - **CGTN**
@@ -463,6 +467,7 @@
  - **gem.cbc.ca**: [<abbr title="netrc machine"><em>cbcgem</em></abbr>]
  - **gem.cbc.ca:live**
  - **gem.cbc.ca:playlist**
+ - **generic**: Generic downloader that works on some sites
  - **Gettr**
  - **GettrStreaming**
  - **Gfycat**
@@ -736,6 +741,7 @@
  - **mixcloud:playlist**
  - **mixcloud:user**
  - **MLB**
+ - **MLBArticle**
  - **MLBTV**: [<abbr title="netrc machine"><em>mlb</em></abbr>]
  - **MLBVideo**
  - **MLSSoccer**
@@ -753,6 +759,7 @@
  - **MotherlessGroup**
  - **Motorsport**: motorsport.com
  - **MotorTrend**
+ - **MotorTrendOnDemand**
  - **MovieClips**
  - **MovieFap**
  - **Moviepilot**
@@ -881,6 +888,7 @@
  - **NoodleMagazine**
  - **Noovo**
  - **Normalboots**
+ - **NOSNLArticle**
  - **NosVideo**
  - **Nova**: TN.cz, Prásk.tv, Nova.cz, Novaplus.cz, FANDA.tv, Krásná.cz and Doma.cz
  - **NovaEmbed**
@@ -999,6 +1007,8 @@
  - **pluralsight**: [<abbr title="netrc machine"><em>pluralsight</em></abbr>]
  - **pluralsight:course**
  - **PlutoTV**
+ - **PodbayFM**
+ - **PodbayFMChannel**
  - **Podchaser**
  - **podomatic**
  - **Pokemon**
@@ -1164,12 +1174,14 @@
  - **SaltTVLive**: [<abbr title="netrc machine"><em>salttv</em></abbr>]
  - **SaltTVRecordings**: [<abbr title="netrc machine"><em>salttv</em></abbr>]
  - **SampleFocus**
+ - **Sangiin**: 参議院インターネット審議中継 (archive)
  - **Sapo**: SAPO Vídeos
  - **savefrom.net**
  - **SBS**: sbs.com.au
  - **schooltv**
  - **ScienceChannel**
  - **screen.yahoo:search**: Yahoo screen search; "yvsearch:" prefix
+ - **Screen9**
  - **Screencast**
  - **ScreencastOMatic**
  - **ScrippsNetworks**
@@ -1191,6 +1203,9 @@
  - **ShareVideosEmbed**
  - **ShemarooMe**
  - **ShowRoomLive**
+ - **ShugiinItvLive**: 衆議院インターネット審議中継
+ - **ShugiinItvLiveRoom**: 衆議院インターネット審議中継 (中継)
+ - **ShugiinItvVod**: 衆議院インターネット審議中継 (ビデオライブラリ)
  - **simplecast**
  - **simplecast:episode**
  - **simplecast:podcast**
@@ -1378,7 +1393,6 @@
  - **Turbo**
  - **tv.dfb.de**
  - **TV2**
- - **TV24UAGenericPassthrough**
  - **TV2Article**
  - **TV2DK**
  - **TV2DKBornholmPlay**
@@ -1431,6 +1445,7 @@
  - **twitter:broadcast**
  - **twitter:card**
  - **twitter:shortener**
+ - **twitter:spaces**
  - **udemy**: [<abbr title="netrc machine"><em>udemy</em></abbr>]
  - **udemy:course**: [<abbr title="netrc machine"><em>udemy</em></abbr>]
  - **UDNEmbed**: 聯合影音
@@ -1584,6 +1599,7 @@
  - **WistiaChannel**
  - **WistiaPlaylist**
  - **wnl**: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
+ - **wordpress:mb.miniAudioPlayer**
  - **wordpress:playlist**
  - **WorldStarHipHop**
  - **wppilot**
@@ -1665,6 +1681,7 @@
  - **ZDFChannel**
  - **Zee5**: [<abbr title="netrc machine"><em>zee5</em></abbr>]
  - **zee5:series**
+ - **ZeeNews**
  - **ZenYandex**
  - **ZenYandexChannel**
  - **Zhihu**
