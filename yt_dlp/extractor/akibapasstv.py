@@ -67,21 +67,20 @@ class AkibaPassTVIE(InfoExtractor):
             'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest']
         },
         {
-            'url': 'https://www.dropout.tv/videos/misfits-magic-holiday-special',
-            'note': 'Episode not in a series',
-            'md5': 'c30fa18999c5880d156339f13c953a26',
+            'url': 'https://akibapasstv.vhx.tv/packages/apan-03-11-2022/videos/akiba-raid-night-03-11-2022-catch-up',
+            'note': 'Catch-Up Episode from live Event',
+            'md5': '9d161927629295b7411a8ad07fb1c9f7',
             'info_dict': {
-                'id': '1915774',
-                'display_id': 'misfits-magic-holiday-special',
+                'id': '2420668',
+                'display_id': 'akiba-raid-night-03-11-2022-catch-up',
                 'ext': 'mp4',
-                'title': 'Misfits & Magic Holiday Special',
-                'description': 'The magical misfits spend Christmas break at Gowpenny, with an unwelcome visitor.',
-                'release_date': '20211215',
-                'thumbnail': 'https://vhx.imgix.net/chuncensoredstaging/assets/d91ea8a6-b250-42ed-907e-b30fb1c65176-8e24b8e5.jpg',
-                'duration': 11698,
-                'uploader_id': 'user80538407',
-                'uploader_url': 'https://vimeo.com/user80538407',
-                'uploader': 'OTT Videos'
+                'title': 'AKIBA RAID NIGHT - 03.11.2022 - Catch-up',
+                'description': 'Erlebe brandneue Serien und beliebte Klassiker der Animewelt als linearen Event-Stream!',
+                'thumbnail': 'https://vhx.imgix.net/akibapasstv/assets/b7882ba1-7731-4c41-8e13-b8d61b6d7d40.jpg',
+                'duration': 20379,
+                'uploader_id': 'peppermintanime',
+                'uploader_url': 'https://vimeo.com/peppermintanime',
+                'uploader': 'peppermint anime'
             },
             'expected_warnings': ['Ignoring subtitle tracks found in the HLS manifest']
         }
@@ -202,7 +201,7 @@ class AkibaPassTVSeasonIE(InfoExtractor):
             self.url_result(
                 url=self._search_regex(r'<a href=["\'](.+?)["\'] class=["\']browse-item-link["\']',
                                        item, 'item_url'),
-                ie=DropoutIE.ie_key()
+                ie=AkibaPassTVIE.ie_key()
             ) for item in get_elements_by_class('js-collection-item', webpage)
         ]
 
