@@ -199,7 +199,7 @@ class AkibaPassTVSeasonIE(InfoExtractor):
 
         entries = [
             self.url_result(
-                url=self._search_regex(r'<a href=["\'](.+?)["\'] class=["\']browse-item-link["\']',
+                url="https://akibapasstv.vhx.tv" + self._search_regex(r'<a href=["\'](.+?)["\'] class=["\']browse-item-link["\']',
                                        item, 'item_url'),
                 ie=AkibaPassTVIE.ie_key()
             ) for item in get_elements_by_class('js-collection-item', webpage)
