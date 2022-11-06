@@ -71,6 +71,12 @@ from .afreecatv import (
     AfreecaTVLiveIE,
     AfreecaTVUserIE,
 )
+from .agora import (
+    TokFMAuditionIE,
+    TokFMPodcastIE,
+    WyborczaPodcastIE,
+    WyborczaVideoIE,
+)
 from .airmozilla import AirMozillaIE
 from .aljazeera import AlJazeeraIE
 from .alphaporno import AlphaPornoIE
@@ -468,6 +474,10 @@ from .duboku import (
 )
 from .dumpert import DumpertIE
 from .defense import DefenseGouvFrIE
+from .deuxm import (
+    DeuxMIE,
+    DeuxMNewsIE
+)
 from .digitalconcerthall import DigitalConcertHallIE
 from .discovery import DiscoveryIE
 from .disney import DisneyIE
@@ -634,6 +644,10 @@ from .gazeta import GazetaIE
 from .gdcvault import GDCVaultIE
 from .gedidigital import GediDigitalIE
 from .generic import GenericIE
+from .genius import (
+    GeniusIE,
+    GeniusLyricsIE,
+)
 from .gettr import (
     GettrIE,
     GettrStreamingIE,
@@ -1248,6 +1262,10 @@ from .nzherald import NZHeraldIE
 from .nzz import NZZIE
 from .odatv import OdaTVIE
 from .odnoklassniki import OdnoklassnikiIE
+from .oftv import (
+    OfTVIE,
+    OfTVPlaylistIE
+)
 from .oktoberfesttv import OktoberfestTVIE
 from .olympics import OlympicsReplayIE
 from .on24 import On24IE
@@ -1630,7 +1648,6 @@ from .skyit import (
     SkyItVideoIE,
     SkyItVideoLiveIE,
     SkyItIE,
-    SkyItAcademyIE,
     SkyItArteIE,
     CieloTVItIE,
     TV8ItIE,
@@ -1750,6 +1767,7 @@ from .svt import (
     SVTPlayIE,
     SVTSeriesIE,
 )
+from .swearnet import SwearnetEpisodeIE
 from .swrmediathek import SWRMediathekIE
 from .syvdk import SYVDKIE
 from .syfy import SyfyIE
