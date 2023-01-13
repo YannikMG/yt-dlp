@@ -24,7 +24,7 @@ from ..utils import (
 )
 
 
-class NBCIE(ThePlatformIE):
+class NBCIE(ThePlatformIE):  # XXX: Do not subclass from concrete IE
     _VALID_URL = r'https?(?P<permalink>://(?:www\.)?nbc\.com/(?:classic-tv/)?[^/]+/video/[^/]+/(?P<id>n?\d+))'
 
     _TESTS = [
@@ -136,6 +136,7 @@ class NBCIE(ThePlatformIE):
         query = {
             'mbr': 'true',
             'manifest': 'm3u',
+            'switch': 'HLSServiceSecure',
         }
         video_id = video_data['mpxGuid']
         tp_path = 'NnzsPC/media/guid/%s/%s' % (video_data.get('mpxAccountId') or '2410887629', video_id)
@@ -305,7 +306,6 @@ class NBCSportsStreamIE(AdobePassIE):
                 'resourceId': base64.b64encode(resource.encode()).decode(),
             }).encode())['tokenizedUrl']
         formats = self._extract_m3u8_formats(tokenized_url, video_id, 'mp4')
-        self._sort_formats(formats)
         return {
             'id': video_id,
             'title': title,
@@ -315,7 +315,7 @@ class NBCSportsStreamIE(AdobePassIE):
         }
 
 
-class NBCNewsIE(ThePlatformIE):
+class NBCNewsIE(ThePlatformIE):  # XXX: Do not subclass from concrete IE
     _VALID_URL = r'(?x)https?://(?:www\.)?(?:nbcnews|today|msnbc)\.com/([^/]+/)*(?:.*-)?(?P<id>[^/?]+)'
     _EMBED_REGEX = [r'<iframe[^>]+src=(["\'])(?P<url>(?:https?:)?//www\.nbcnews\.com/widget/video-embed/[^"\']+)\1']
 
@@ -437,7 +437,6 @@ class NBCNewsIE(ThePlatformIE):
                 'tbr': tbr,
                 'ext': 'mp4',
             })
-        self._sort_formats(formats)
 
         subtitles = {}
         closed_captioning = video_data.get('closedCaptioning')
@@ -581,7 +580,6 @@ class NBCOlympicsStreamIE(AdobePassIE):
             # -http_seekable requires ffmpeg 4.3+ but it doesnt seem possible to
             # download with ffmpeg without this option
             f['downloader_options'] = {'ffmpeg_args': ['-seekable', '0', '-http_seekable', '0', '-icy', '0']}
-        self._sort_formats(formats)
 
         return {
             'id': pid,
@@ -745,7 +743,6 @@ class NBCStationsIE(InfoExtractor):
         formats.extend(self._extract_m3u8_formats(
             manifest_url, video_id, 'mp4', headers=headers, m3u8_id='hls',
             fatal=live, live=live, errnote='No HLS formats found'))
-        self._sort_formats(formats)
 
         return {
             'id': str_or_none(video_id),
