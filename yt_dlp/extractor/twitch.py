@@ -3,6 +3,7 @@ import itertools
 import json
 import random
 import re
+import time
 
 from .common import InfoExtractor
 from ..compat import (
@@ -56,6 +57,7 @@ class TwitchBaseIE(InfoExtractor):
         'VideoMetadata': '226edb3e692509f727fd56821f5653c05740242c82b0388883e0c0e75dcbf687',
         'VideoPlayer_ChapterSelectButtonVideo': '8d2793384aac3773beab5e59bd5d6f585aedb923d292800119e03d40cd0f9b41',
         'VideoPlayer_VODSeekbarPreviewVideo': '07e99e4d56c5a7c67117a154777b0baf85a5ffefa393b213f4bc712ccaf85dd6',
+        'VideoCommentsByOffsetOrCursor': 'b70a3591ff0f4e0313d126c6a1502d79a1c02baebb288227c582044aa76adf6a',
     }
 
     def _perform_login(self, username, password):
@@ -287,6 +289,7 @@ class TwitchVodIE(TwitchBaseIE):
             'view_count': int,
         },
         'params': {
+            'subtitleslangs': ['live_chat'],
             'skip_download': True
         },
     }, {
@@ -511,6 +514,78 @@ class TwitchVodIE(TwitchBaseIE):
                 } for path in images],
             }
 
+    def _extract_chat(self, vod_id):
+        chat_history = []
+        has_more_pages = True
+        retry_sleep = 5
+        max_retries = 3
+        retries = 0
+        pagenum = 1
+        gql_ops = [
+            {
+                'operationName': 'VideoCommentsByOffsetOrCursor',
+                'variables': {
+                    'videoID': vod_id,
+                    # 'cursor': <filled in in subsequent requests>
+                }
+            }
+        ]
+
+        self.to_screen('Downloading chat fragment pages')
+
+        while has_more_pages:
+            response = self._download_gql(vod_id, gql_ops, 'Downloading chat fragment page %d' % pagenum, fatal=False)
+
+            if response is False:
+                self.report_warning(f'Unable to fetch next chat history fragment. {retries + 1}. try of {max_retries}')
+
+                if retries < max_retries:
+                    retries += 1
+                    time.sleep(retry_sleep)
+                    continue
+                else:
+                    self.report_warning('Chat history download failed: retry limit reached')
+                    # TODO: when this happens, should I forget a partial chat history, or is it better to keep it?
+                    #       I think if I keep it, it might be better to persist a warning that it is incomplete
+                    # chat_history.clear()
+                    break
+
+            comments_obj = traverse_obj(response, (0, 'data', 'video', 'comments'))
+            chat_history.extend(traverse_obj(comments_obj, ('edges', slice, 'node')))
+
+            has_more_pages = traverse_obj(comments_obj, ('pageInfo', 'hasNextPage'))
+
+            if has_more_pages:
+                cursor = traverse_obj(comments_obj, ('edges', 0, 'cursor'))
+                if cursor is None:
+                    self.report_warning("Cannot continue downloading chat history: cursor is missing. There are additional chat pages to download.")
+                    break
+
+                pagenum += 1
+                gql_ops[0]['variables']['cursor'] = cursor
+
+            if has_more_pages is None:
+                cursor = traverse_obj(comments_obj, ('edges', 0, 'cursor'))
+
+                if cursor is not None:
+                    self.report_warning("Next page indication is missing, but found cursor. Continuing chat history download.")
+                else:  # In this case maintenance might be needed. Purpose is to prevent silent errors.
+                    self.report_warning("Next page indication is missing, and cursor not found.")
+
+        chat_history_length = len(chat_history)
+        self.to_screen('Extracted %d chat messages' % chat_history_length)
+        if chat_history_length == 0:
+            return None
+
+        return {
+            'live_chat': [  # subtitle tag
+                {
+                    'data': json.dumps(chat_history),
+                    'ext': 'twitch-gql-20221228.json'
+                }
+            ]
+        }
+
     def _real_extract(self, url):
         vod_id = self._match_id(url)
 
@@ -542,16 +617,9 @@ class TwitchVodIE(TwitchBaseIE):
         if 't' in query:
             info['start_time'] = parse_duration(query['t'][0])
 
-        if info.get('timestamp') is not None:
-            info['subtitles'] = {
-                'rechat': [{
-                    'url': update_url_query(
-                        'https://api.twitch.tv/v5/videos/%s/comments' % vod_id, {
-                            'client_id': self._CLIENT_ID,
-                        }),
-                    'ext': 'json',
-                }],
-            }
+        if ('live_chat' in self.get_param('subtitleslangs', [])) \
+                and info.get('timestamp') is not None:
+            info['subtitles'] = self._extract_chat(vod_id)
 
         return info
 
