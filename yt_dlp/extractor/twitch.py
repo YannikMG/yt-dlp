@@ -162,23 +162,6 @@ class TwitchBaseIE(InfoExtractor):
                 }
             }
         return self._download_base_gql(video_id, ops, note)
-    
-    def _download_gql_chat(self, video_id, ops, note, fatal=True):
-        headers = {
-            'Content-Type': 'text/plain;charset=UTF-8',
-            'Client-ID': 'kd1unb4b3q4t58fwlpcbzcbnm76a8fp',
-        }
-        for op in ops:
-            op['extensions'] = {
-                'persistedQuery': {
-                    'version': 1,
-                    'sha256Hash': self._OPERATION_HASHES[op['operationName']],
-                }
-            }
-        return self._download_json(
-            'https://gql.twitch.tv/gql', video_id, note,
-            data=json.dumps(ops).encode(),
-            headers=headers, fatal=fatal)
 
     def _download_access_token(self, video_id, token_kind, param_name):
         method = '%sPlaybackAccessToken' % token_kind
@@ -566,7 +549,7 @@ class TwitchVodIE(TwitchBaseIE):
         self.to_screen('Downloading chat fragment pages')
 
         while has_more_pages:
-            response = self._download_gql_chat(vod_id, gql_ops, 'Downloading chat fragment page %d' % pagenum, fatal=False)
+            response = self._download_gql(vod_id, gql_ops, 'Downloading chat fragment page %d' % pagenum, fatal=False)
 
             if response is False:
                 self.report_warning(f'Unable to fetch next chat history fragment. {retries + 1}. try of {max_retries}')
