@@ -3,7 +3,6 @@ import json
 import re
 import urllib.parse
 
-from .common import InfoExtractor
 from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
@@ -15,6 +14,7 @@ from ..utils import (
     url_or_none,
 )
 from ..utils.traversal import traverse_obj
+from .common import InfoExtractor
 
 class SheetaEmbedIE(InfoExtractor):
     IE_NAME = 'sheeta'
