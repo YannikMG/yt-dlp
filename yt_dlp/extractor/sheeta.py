@@ -1,12 +1,6 @@
-import base64
-import copy
-import datetime as dt
 import functools
-import hashlib
 import json
-import random
 import re
-import string
 import urllib.parse
 
 from .common import InfoExtractor
@@ -14,17 +8,11 @@ from ..networking.exceptions import HTTPError
 from ..utils import (
     ExtractorError,
     OnDemandPagedList,
-    extract_attributes,
     filter_dict,
-    get_element_html_by_attribute,
-    get_element_html_by_id,
     int_or_none,
     parse_qs,
     unified_timestamp,
-    update_url_query,
     url_or_none,
-    urlencode_postdata,
-    urljoin,
 )
 from ..utils.traversal import traverse_obj
 
