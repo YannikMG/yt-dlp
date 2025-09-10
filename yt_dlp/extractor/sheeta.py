@@ -16,6 +16,7 @@ from ..utils import (
 )
 from ..utils.traversal import traverse_obj
 
+
 class SheetaEmbedIE(InfoExtractor):
     IE_NAME = 'sheeta'
     IE_DESC = 'fan club system developed by DWANGO (ドワンゴ)'
